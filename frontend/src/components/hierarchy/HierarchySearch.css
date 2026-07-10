@@ -1,0 +1,10 @@
+.hierarchy-search{
+    background-color: aqua;
+    border: 1px solid gray;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+.hierarchy-search input{
+    height: 20px;
+}
