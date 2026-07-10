@@ -8,14 +8,18 @@ import {filterTree} from "../../utils/filterTree.js"
 function HierarchyPanel() {
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const [filteredTree, setFilteredTree] = useState(null);
+  // const [filteredTree, setFilteredTree] = useState(null);
+  const treeToRender =
+    searchInput
+        ? filterTree(searchInput, storeHierarchy)
+        : storeHierarchy;
 
 
-  function debouncedSearch(){
-    const searchResult = filterTree(searchInput, storeHierarchy);
-    console.log("Search result: ", searchResult);
-    setFilteredTree(searchResult);
-  }
+  // function debouncedSearch(){
+  //   const searchResult = filterTree(searchInput, storeHierarchy);
+  //   console.log("Search result: ", searchResult);
+  //   setFilteredTree(searchResult);
+  // }
 
   return (
     <div className="hierarchy-panel">
@@ -23,9 +27,9 @@ function HierarchyPanel() {
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         tree={storeHierarchy}
-        onSearch={debouncedSearch}
+        onSearch={filterTree}
       />
-      {!filteredTree && storeHierarchy.map((node) => (
+      {treeToRender.map((node) => (
         <TreeNode
           key={node.id}
           node={node}
@@ -33,16 +37,7 @@ function HierarchyPanel() {
           setSelectedNodeId={setSelectedNodeId}
         />
       ))}
-      {filteredTree && 
-      filteredTree.map((node) => (
-        <TreeNode
-          key={node.id}
-          node={node}
-          selectedNodeId={selectedNodeId}
-          setSelectedNodeId={setSelectedNodeId}
-        />
-      ))
-    }
+      
     </div>
   );
 }
