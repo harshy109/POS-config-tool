@@ -32,6 +32,7 @@ function HierarchyPanel() {
           node={node}
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
+          searchInput = {searchInput}
         />
       ))}
       
