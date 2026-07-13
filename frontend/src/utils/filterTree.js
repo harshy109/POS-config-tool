@@ -29,6 +29,10 @@ export function filterTree(searchTerm, tree) {
   return tree.map((node) => filterNode(node, lower)).filter(Boolean);
 }
 
+
+
+
+
 // function findNode(lowerCaseSearchTerm, node){
 //   if (node.name.toLowerCase().includes(lowerCaseSearchTerm)) {
 //       console.log("FOund in node:", node);

@@ -1,14 +1,14 @@
-import { Input } from "antd";
+import { Empty, Input } from "antd";
 import storeHierarchy from "../../mocks/storeHierarchy";
 import HierarchySearch from "./HierarchySearch.jsx";
 import TreeNode from "./TreeNode";
 import { useState } from "react";
-import {filterTree} from "../../utils/filterTree.js"
+import {filterTree} from "../../utils/filterTree.js";
 
 function HierarchyPanel() {
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy): storeHierarchy;
+  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy) ?? storeHierarchy: storeHierarchy;
 
 
   // function debouncedSearch(){
@@ -23,7 +23,10 @@ function HierarchyPanel() {
         searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
-      {treeToRender.map((node) => (
+      {treeToRender.length === 0 ? 
+        <Empty description="No matching results found."/>
+      :
+      treeToRender.map((node) => (
         <TreeNode
           key={node.id}
           node={node}
