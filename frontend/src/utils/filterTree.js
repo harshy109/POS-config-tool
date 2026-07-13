@@ -21,6 +21,7 @@ function filterNode(node, searchTerm) {
 }
 
 export function filterTree(searchTerm, tree) {
+
     const lower = searchTerm.toLowerCase();
 
     return tree

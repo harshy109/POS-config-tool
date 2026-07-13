@@ -8,11 +8,7 @@ import {filterTree} from "../../utils/filterTree.js"
 function HierarchyPanel() {
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  // const [filteredTree, setFilteredTree] = useState(null);
-  const treeToRender =
-    searchInput
-        ? filterTree(searchInput, storeHierarchy)
-        : storeHierarchy;
+  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy): storeHierarchy;
 
 
   // function debouncedSearch(){
@@ -26,8 +22,6 @@ function HierarchyPanel() {
       <HierarchySearch
         searchInput={searchInput}
         setSearchInput={setSearchInput}
-        tree={storeHierarchy}
-        onSearch={filterTree}
       />
       {treeToRender.map((node) => (
         <TreeNode

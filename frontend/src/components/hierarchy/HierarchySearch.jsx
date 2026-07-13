@@ -1,7 +1,7 @@
 import { SearchOutlined } from "@ant-design/icons";
 import "./HierarchySearch.css";
 import { Input } from "antd";
-const HierarchySearch = ({ searchInput, setSearchInput, onSearch }) => {
+const HierarchySearch = ({ searchInput, setSearchInput }) => {
   function handleSearchInput(e) {
     setSearchInput(e.target.value);
   }
@@ -13,7 +13,6 @@ const HierarchySearch = ({ searchInput, setSearchInput, onSearch }) => {
         style={{ width: 280 }}
         value={searchInput}
         onChange={handleSearchInput}
-        onSearch={onSearch}
       />
     </div>
   );
