@@ -1,16 +1,45 @@
-import { Button } from 'antd'
-import React from 'react'
+import { Button, Space } from "antd";
 import "./Configuration.css"
-const ConfigurationActions = ({isEditing, setIsEditing}) => {
-  return (
-    <div className='configuration-action'>
-    {isEditing ?
-    <>
-    <Button type="success">Save</Button>
-    <Button onClick={()=>setIsEditing(!isEditing)}>Cancel</Button></>
-    :<Button type='primary' onClick={()=>setIsEditing(!isEditing)}>Edit</Button>}
-    </div>
-  )
+function ConfigurationActions({
+    isEditing,
+    onEdit,
+    onSave,
+    onCancel
+}) {
+
+    if(!isEditing){
+
+        return (
+            <Button
+                type="primary"
+                onClick={onEdit}
+            >
+                Edit
+            </Button>
+        );
+    }
+
+    return (
+
+        <Space>
+
+            <Button
+                onClick={onCancel}
+            >
+                Cancel
+            </Button>
+
+            <Button
+                type="primary"
+                onClick={onSave}
+            >
+                Save
+            </Button>
+
+        </Space>
+
+    );
+
 }
 
-export default ConfigurationActions
+export default ConfigurationActions;

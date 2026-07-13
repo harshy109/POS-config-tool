@@ -2,7 +2,7 @@ import { Card } from "antd";
 import ConfigurationRow from "./ConfigurationRow";
 import ConfigurationActions from "./ConfigurationActions";
 
-function ConfigurationSection({ title, settings, isEditing, setIsEditing }) {
+function ConfigurationSection({ title, settings, isEditing,form, setIsEditing }) {
     
   return (
     <>
@@ -16,6 +16,7 @@ function ConfigurationSection({ title, settings, isEditing, setIsEditing }) {
           key={setting.key}
           setting={setting}
           isEditing = {isEditing}
+          setIsEditing = {setIsEditing}
         />
       ))}
       

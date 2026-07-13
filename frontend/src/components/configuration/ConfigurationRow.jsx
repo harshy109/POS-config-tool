@@ -1,4 +1,4 @@
-import { Col, Input, Row, Typography } from "antd";
+import { Col, Form, Input, Row, Typography } from "antd";
 
 const { Text } = Typography;
 
@@ -15,7 +15,16 @@ function ConfigurationRow({ setting, isEditing }) {
       </Col>
 
       <Col span={14}>
-        {isEditing ? <Input value={setting.value}></Input> : <Text>{setting.value}</Text>}
+        {isEditing ? (
+          <Form.Item
+              name={setting.key}
+              style={{ marginBottom: 12 }}
+          >
+              <Input defaultValue={setting.value}/>
+          </Form.Item>
+        ) : (
+          <Text>{setting.value}</Text>
+        )}
       </Col>
     </Row>
   );
