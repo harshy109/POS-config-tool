@@ -1,8 +1,8 @@
-import { Col, Row, Typography } from "antd";
+import { Col, Input, Row, Typography } from "antd";
 
 const { Text } = Typography;
 
-function ConfigurationRow({ setting }) {
+function ConfigurationRow({ setting, isEditing }) {
   return (
     <Row
       style={{
@@ -15,7 +15,7 @@ function ConfigurationRow({ setting }) {
       </Col>
 
       <Col span={14}>
-        <Text>{setting.value}</Text>
+        {isEditing ? <Input value={setting.value}></Input> : <Text>{setting.value}</Text>}
       </Col>
     </Row>
   );

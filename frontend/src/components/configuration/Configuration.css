@@ -4,3 +4,11 @@
     margin-left: 1rem;
     background-color: #fff;
 }
+
+.configuration-action{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}

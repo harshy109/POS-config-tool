@@ -1,8 +1,11 @@
 import { Card } from "antd";
 import ConfigurationRow from "./ConfigurationRow";
+import ConfigurationActions from "./ConfigurationActions";
 
-function ConfigurationSection({ title, settings }) {
+function ConfigurationSection({ title, settings, isEditing, setIsEditing }) {
+    
   return (
+    <>
     <Card
       title={title}
       size="small"
@@ -12,9 +15,13 @@ function ConfigurationSection({ title, settings }) {
         <ConfigurationRow
           key={setting.key}
           setting={setting}
+          isEditing = {isEditing}
         />
       ))}
+      
     </Card>
+    <ConfigurationActions isEditing={isEditing} setIsEditing={setIsEditing}/>
+    </>
   );
 }
 

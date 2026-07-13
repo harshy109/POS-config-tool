@@ -3,8 +3,10 @@ import storeConfigurations from "../../mocks/storeConfigurations";
 import ConfigurationHeader from "./ConfigurationHeader";
 import ConfigurationTab from "./ConfigurationTab";
 import ConfigurationSection from "./ConfigurationSection";
+import {useState} from 'react';
 
 function ConfigurationPanel({ selectedNodeId }) {
+  const [isEditing, setIsEditing] = useState(false);
   if (!selectedNodeId) {
     return (
       <Card>
@@ -32,6 +34,8 @@ function ConfigurationPanel({ selectedNodeId }) {
       <ConfigurationSection
         title="General Settings"
         settings={configuration.generalSettings}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
       />
     </Card>
   );
