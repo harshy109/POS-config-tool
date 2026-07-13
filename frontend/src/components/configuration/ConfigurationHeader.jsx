@@ -1,17 +1,25 @@
-import React from 'react'
+import { Divider, Tag, Typography } from "antd";
 
-const ConfigurationHeader = ({configuration}) => {
+const { Title, Text } = Typography;
+
+function ConfigurationHeader({ configuration }) {
   return (
-    <div style={{display: 'flex', flexDirection:'row'}}>
-        <img src="#" alt="Store Image" />
-       <div>
-          <h2>{configuration.storeName}</h2>
-          {configuration.district},
-          {configuration.state},
-          {configuration.country}
-        </div>
-    </div>
-  )
+    <>
+      <Title level={4}>{configuration.storeName}</Title>
+
+      <Tag color="green">{configuration.status}</Tag>
+
+      <br />
+
+      <Text type="secondary">
+        {configuration.location.district},{" "}
+        {configuration.location.state},{" "}
+        {configuration.location.country}
+      </Text>
+
+      <Divider />
+    </>
+  );
 }
 
-export default ConfigurationHeader
+export default ConfigurationHeader;

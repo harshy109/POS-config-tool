@@ -1,9 +1,26 @@
-import React from 'react'
+import { Tabs } from "antd";
 
-const ConfigurationTab = () => {
-  return (
-    <div>ConfigurationTab</div>
-  )
+function ConfigurationTab() {
+  const items = [
+    {
+      key: "general",
+      label: "Configuration",
+    },
+    {
+      key: "override",
+      label: "Overrides",
+    },
+    {
+      key: "history",
+      label: "History",
+    },
+    {
+      key: "propagation",
+      label: "Propagation",
+    },
+  ];
+
+  return <Tabs defaultActiveKey="general" items={items} />;
 }
 
-export default ConfigurationTab
+export default ConfigurationTab;

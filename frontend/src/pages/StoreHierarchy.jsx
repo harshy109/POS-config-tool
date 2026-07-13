@@ -1,12 +1,14 @@
 import HierarchyPanel from "../components/hierarchy/HierarchyPanel";
 import { useState } from "react";
 import ConfigurationPanel from "../components/configuration/ConfigurationPanel";
+import "./StoreHierarchy.css"
+
 function StoreHierarchy() {
   const [selectedNodeId, setSelectedNodeId] = useState("");
 
   return (
     <>
-      <div className="store-page" style={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
+      <div className="store-page">
         <HierarchyPanel
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
