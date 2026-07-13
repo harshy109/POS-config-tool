@@ -1,67 +1,39 @@
 function filterNode(node, searchTerm) {
+  //Check 1: Do I match search term?
+  const nodeMatches = node.name.toLowerCase().includes(searchTerm);
 
-    if(node.name.toLowerCase().includes(searchTerm)){
-        return node;
-    }
+  if (nodeMatches) {
+    return node;
+  }
 
-    const filteredChildren =
-        node.children
-            .map(child => filterNode(child, searchTerm))
-            .filter(Boolean);
+  //Check 2: Does any of my children match searchTerm
+  const filteredChildren = node.children
+    .map((child) => filterNode(child, searchTerm))
+    .filter(Boolean);
 
-    if(filteredChildren.length > 0){
+  //Return array of filtered children if any
+  if (filteredChildren.length > 0) {
+    return {
+      ...node,
+      children: filteredChildren,
+    };
+  }
 
-        return {
-            ...node,
-            children: filteredChildren
-        };
-    }
-
-    return null;
+  //Else return null if nothing matches
+  return null;
 }
 
 export function filterTree(searchTerm, tree) {
+  const lower = searchTerm.toLowerCase();
 
-    const lower = searchTerm.toLowerCase();
-
-    return tree
-        .map(node => filterNode(node, lower))
-        .filter(Boolean);
+  return tree.map((node) => filterNode(node, lower)).filter(Boolean);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // function findNode(lowerCaseSearchTerm, node){
 //   if (node.name.toLowerCase().includes(lowerCaseSearchTerm)) {
 //       console.log("FOund in node:", node);
 //       return node;
-//     } 
+//     }
 //     else if(node.children == null){
 //         return;
 //     }
@@ -80,9 +52,7 @@ export function filterTree(searchTerm, tree) {
 //       if(result){
 //         break;
 //       }
-    
+
 //   }
 //   return result;
 // }
-
-
