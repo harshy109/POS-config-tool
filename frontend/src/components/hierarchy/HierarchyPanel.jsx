@@ -4,21 +4,14 @@ import HierarchySearch from "./HierarchySearch.jsx";
 import TreeNode from "./TreeNode";
 import { useState } from "react";
 import {filterTree} from "../../utils/filterTree.js";
-
-function HierarchyPanel() {
-  const [selectedNodeId, setSelectedNodeId] = useState(null);
+import "./HierarchyPanel.css"
+function HierarchyPanel({selectedNodeId, setSelectedNodeId}) {
+  // const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy) ?? storeHierarchy: storeHierarchy;
-
-
-  // function debouncedSearch(){
-  //   const searchResult = filterTree(searchInput, storeHierarchy);
-  //   console.log("Search result: ", searchResult);
-  //   setFilteredTree(searchResult);
-  // }
+  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy): storeHierarchy;
 
   return (
-    <div className="hierarchy-panel">
+    <div className="hierarchy-panel bg-green-100">
       <HierarchySearch
         searchInput={searchInput}
         setSearchInput={setSearchInput}

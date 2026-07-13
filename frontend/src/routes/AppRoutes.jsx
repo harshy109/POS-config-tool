@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
-import Configurations from '../pages/Configurations'
+import Configurations from '../pages/Configuration'
 import Dashboard from '../pages/Dashboard'
 import Settings from '../pages/Settings'
 import StoreHierarchy from '../pages/StoreHierarchy'

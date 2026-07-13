@@ -12,7 +12,7 @@ const AppLayout = () => {
       <Layout>
         <Header />
         <Content style={{ padding: 24 }}>
-          <div style={{ marginBottom: 16, color: '#667085' }}>Home / Dashboard</div>
+          <div style={{ marginBottom: 16, color: '#b5b5b5' }}>Home / Dashboard</div>
           <Outlet />
         </Content>
       </Layout>
