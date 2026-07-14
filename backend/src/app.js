@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const hierarchyRoutes = require("./routes/hierarchyRoutes");
+const configurationRoutes = require("./routes/configurationRoutes");
 const app = express();
 
 app.use(cors());
@@ -25,5 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/hierarchy", hierarchyRoutes);
+
+app.use("/api/configuration", configurationRoutes);
 
 module.exports = app;
