@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const hierarchyRoutes = require("./routes/hierarchyRoutes");
 const app = express();
 
 app.use(cors());
@@ -23,5 +23,7 @@ app.get("/", (req, res) => {
     message: "POS Configuration API Running",
   });
 });
+
+app.use("/api/hierarchy", hierarchyRoutes);
 
 module.exports = app;
