@@ -8,8 +8,7 @@ function ConfigurationSection({ title, settings, isEditing,form, setIsEditing })
     <>
     <Card
       title={title}
-      size="small"
-      style={{ marginTop: 20 }}
+      size="medium"
     >
       {settings.map((setting) => (
         <ConfigurationRow
@@ -21,7 +20,6 @@ function ConfigurationSection({ title, settings, isEditing,form, setIsEditing })
       ))}
       
     </Card>
-    <ConfigurationActions isEditing={isEditing} setIsEditing={setIsEditing}/>
     </>
   );
 }

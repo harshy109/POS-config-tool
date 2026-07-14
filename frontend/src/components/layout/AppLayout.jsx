@@ -11,8 +11,8 @@ const AppLayout = () => {
       <Sidebar />
       <Layout>
         <Header />
-        <Content style={{ padding: 24 }}>
-          <div style={{ marginBottom: 16, color: '#b5b5b5' }}>Home / Dashboard</div>
+        <Content style={{ }}>
+          {/* <div style={{ marginBottom: 16, color: '#b5b5b5' }}>Home / Dashboard</div> */}
           <Outlet />
         </Content>
       </Layout>
