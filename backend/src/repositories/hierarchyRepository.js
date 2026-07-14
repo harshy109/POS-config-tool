@@ -11,9 +11,9 @@ async function getHierarchy() {
     ORDER BY id;
   `;
 
-  const result = await pool.query(query);
+  const { rows } = await pool.query(query);
 
-  return result.rows;
+  return rows;
 }
 
 module.exports = {
