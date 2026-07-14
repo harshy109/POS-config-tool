@@ -1,69 +1,60 @@
+-- ==========================================
+-- POS Configuration Tool Schema
+-- ==========================================
+
+DROP TABLE IF EXISTS audit_logs CASCADE;
+DROP TABLE IF EXISTS node_configurations CASCADE;
+DROP TABLE IF EXISTS configuration_keys CASCADE;
+DROP TABLE IF EXISTS hierarchy CASCADE;
+
+-- ==========================================
+-- Hierarchy
+-- Every node can have configurations
+-- ==========================================
+
 CREATE TABLE hierarchy (
     id SERIAL PRIMARY KEY,
-
-    parent_id INTEGER REFERENCES hierarchy(id),
-
+    parent_id INT REFERENCES hierarchy(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,
-
     type VARCHAR(30) NOT NULL,
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE stores (
-
-    id SERIAL PRIMARY KEY,
-
-    hierarchy_id INTEGER
-        REFERENCES hierarchy(id),
-
-    store_code VARCHAR(20) UNIQUE NOT NULL,
-
-    store_name VARCHAR(100) NOT NULL,
-
-    status VARCHAR(20)
-        DEFAULT 'ACTIVE',
-
-    created_at TIMESTAMP
-        DEFAULT CURRENT_TIMESTAMP
-);
+-- ==========================================
+-- Configuration Keys
+-- ==========================================
 
 CREATE TABLE configuration_keys (
-
     id SERIAL PRIMARY KEY,
-
-    key_name VARCHAR(100)
-        UNIQUE NOT NULL,
-
-    display_name VARCHAR(100),
-
-    data_type VARCHAR(30),
-
+    key_name VARCHAR(100) UNIQUE NOT NULL,
+    display_name VARCHAR(100) NOT NULL,
+    data_type VARCHAR(30) NOT NULL,
     default_value TEXT
 );
 
-CREATE TABLE store_configurations (
+-- ==========================================
+-- Node Configurations
+-- Can belong to ANY hierarchy node
+-- ==========================================
 
+CREATE TABLE node_configurations (
     id SERIAL PRIMARY KEY,
+    node_id INT NOT NULL REFERENCES hierarchy(id) ON DELETE CASCADE,
+    configuration_key_id INT NOT NULL REFERENCES configuration_keys(id),
+    value TEXT NOT NULL,
+    is_override BOOLEAN DEFAULT FALSE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    store_id INTEGER
-        REFERENCES stores(id),
-
-    configuration_key_id INTEGER
-        REFERENCES configuration_keys(id),
-
-    value TEXT,
-
-    is_override BOOLEAN
-        DEFAULT FALSE,
-
-    updated_at TIMESTAMP
-        DEFAULT CURRENT_TIMESTAMP
+    UNIQUE(node_id, configuration_key_id)
 );
+
+-- ==========================================
+-- Audit Logs
+-- ==========================================
 
 CREATE TABLE audit_logs (
     id SERIAL PRIMARY KEY,
-    configuration_id INTEGER NOT NULL REFERENCES store_configurations(id),
+    configuration_id INT REFERENCES node_configurations(id),
     old_value TEXT,
     new_value TEXT,
     updated_by VARCHAR(100),
