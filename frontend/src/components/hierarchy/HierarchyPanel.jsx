@@ -1,14 +1,36 @@
-import { Empty, Input } from "antd";
-import storeHierarchy from "../../mocks/storeHierarchy";
+import { Empty, Input , Spin} from "antd";
+// import fetchHierarchy from "../../mocks/fetchHierarchy";
+import { fetchHierarchy } from "../../services/hierarchyService";
 import HierarchySearch from "./HierarchySearch.jsx";
 import TreeNode from "./TreeNode";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import {filterTree} from "../../utils/filterTree.js";
 import "./HierarchyPanel.css"
 function HierarchyPanel({selectedNodeId, setSelectedNodeId}) {
   // const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const treeToRender = searchInput.trim() ? filterTree(searchInput, storeHierarchy): storeHierarchy;
+  const [hierarchy, setHierarchy] = useState([]);
+  const [loading, setLoading] = useState(true);
+   const treeToRender = searchInput.trim() ? filterTree(searchInput, hierarchy): hierarchy;
+
+  useEffect(() => {
+  async function loadHierarchy() {
+    try {
+      const data = await fetchHierarchy();
+      setHierarchy(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadHierarchy();
+}, []);
+
+if (loading) {
+  return <Spin size="large" />;
+}
 
   return (
     <div className="hierarchy-panel bg-green-100">
