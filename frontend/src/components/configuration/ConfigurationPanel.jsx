@@ -4,14 +4,34 @@ import ConfigurationHeader from "./ConfigurationHeader";
 import ConfigurationTab from "./ConfigurationTab";
 import ConfigurationSection from "./ConfigurationSection";
 import ConfigurationActions from "./ConfigurationActions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function ConfigurationPanel({ selectedNodeId }) {
-  
   const [isEditing, setIsEditing] = useState(false);
-  const configuration = storeConfigurations[selectedNodeId];
+  const [configuration, setConfiguration] = useState(null);
 
-   if (!selectedNodeId) {
+  useEffect(() => {
+    if (selectedNodeId) {
+      setConfiguration(structuredClone(storeConfigurations[selectedNodeId]));
+    }
+  }, [selectedNodeId]);
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (!configuration) return;
+
+    const initialValues = Object.fromEntries(
+      configuration.generalSettings.map((setting) => [
+        setting.key,
+        setting.value,
+      ]),
+    );
+
+    form.setFieldsValue(initialValues);
+  }, [configuration, form]);
+
+  if (!selectedNodeId) {
     return (
       <Card className="card">
         <Empty description="Select a store to view configuration" />
@@ -27,32 +47,28 @@ function ConfigurationPanel({ selectedNodeId }) {
     );
   }
 
-  const [form] = Form.useForm();
-  const [configurationData, setConfigurationData] = useState(configuration);
-  const initialValues = {};
-
-  configuration.generalSettings.forEach((setting) => {
-      initialValues[setting.key] = setting.value;
-  });
-
-  console.log(initialValues);
-
-  function handleSave(){
+  function handleSave() {
     const values = form.getFieldsValue();
     console.log(values);
-    setConfigurationData(values);
+    setConfiguration((prev) => ({
+      ...prev,
+
+      generalSettings: prev.generalSettings.map((setting) => ({
+        ...setting,
+
+        value: values[setting.key],
+      })),
+    }));
     setIsEditing(false);
   }
 
-  function handleEdit(){
+  function handleEdit() {
     setIsEditing(true);
   }
 
-  function handleCancel(){
+  function handleCancel() {
     setIsEditing(false);
-  }  
-
- 
+  }
 
   return (
     <Card style={{ height: "100%" }} className="card">
@@ -60,7 +76,7 @@ function ConfigurationPanel({ selectedNodeId }) {
 
       <ConfigurationTab />
 
-      <Form form={form} layout="vertical" initialValues={initialValues}>
+      <Form form={form} layout="vertical">
         <ConfigurationSection
           title="General Settings"
           settings={configuration.generalSettings}
@@ -71,14 +87,19 @@ function ConfigurationPanel({ selectedNodeId }) {
       </Form>
       {/* <ConfigurationActions isEditing={isEditing} onSave={handleSave} onCancel={handleCancel} onEdit = {handleEdit}/> */}
       <div
-    style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        marginTop: 20
-    }}
->
-    <ConfigurationActions  isEditing={isEditing} onSave={handleSave} onCancel={handleCancel} onEdit = {handleEdit} />
-</div>
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: 20,
+        }}
+      >
+        <ConfigurationActions
+          isEditing={isEditing}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          onEdit={handleEdit}
+        />
+      </div>
     </Card>
   );
 }
