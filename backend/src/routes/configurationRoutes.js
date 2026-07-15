@@ -14,4 +14,8 @@ router.get(
   "/:nodeId",
   configurationController.getEffectiveConfiguration
 );
+
+router.put("/:nodeId", configurationController.updateConfiguration);
+
+
 module.exports = router;

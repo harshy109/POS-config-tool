@@ -3,6 +3,7 @@
     border-radius: 1rem;
     margin-left: 1rem;
     background-color: #fff;
+    height: max-content;
 }
 
 .configuration-action{
