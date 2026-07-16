@@ -1,0 +1,25 @@
+.tree-node{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    padding:4px 4px;
+    border-radius:6px;
+}
+
+.selected{
+    background-color: #bfd4e4d4
+}
+
+.tree-node:hover{
+    background:#dfdfdfd6;
+}
+
+.tree-node.selected:hover {
+    background: #e0ebf4;
+}
+
+.tree-children{
+    margin-left:1rem;
+}
+

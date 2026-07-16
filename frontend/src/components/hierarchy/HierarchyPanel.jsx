@@ -1,16 +1,56 @@
-import storeHierarchy from "../../mocks/storeHierarchy";
+import { Empty, Input , Spin} from "antd";
+// import fetchHierarchy from "../../mocks/fetchHierarchy";
+import { fetchHierarchy } from "../../services/hierarchyService";
+import HierarchySearch from "./HierarchySearch.jsx";
 import TreeNode from "./TreeNode";
-import {useState} from 'react';
+import { useState , useEffect} from "react";
+import {filterTree} from "../../utils/filterTree.js";
+import "./HierarchyPanel.css"
+function HierarchyPanel({selectedNodeId, setSelectedNodeId}) {
+  // const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [hierarchy, setHierarchy] = useState([]);
+  const [loading, setLoading] = useState(true);
+   const treeToRender = searchInput.trim() ? filterTree(searchInput, hierarchy): hierarchy;
 
-function HierarchyPanel() {
-  //console.log(storeHierarchy);
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedNodeId, setSelectedNodeId] = useState(null);
+  useEffect(() => {
+  async function loadHierarchy() {
+    try {
+      const data = await fetchHierarchy();
+      setHierarchy(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadHierarchy();
+}, []);
+
+if (loading) {
+  return <Spin size="large" className="loading-spin"/>;
+}
+
   return (
-    <div>
-      {storeHierarchy.map(node => (
-    <TreeNode key={node.id} node={node} selectedNodeId = {selectedNodeId} setSelectedNodeId= {setSelectedNodeId}/>
-))}
+    <div className="hierarchy-panel bg-green-100">
+      <HierarchySearch
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
+      {treeToRender.length === 0 ? 
+        <Empty description="No matching results found."/>
+      :
+      treeToRender.map((node) => (
+        <TreeNode
+          key={node.id}
+          node={node}
+          selectedNodeId={selectedNodeId}
+          setSelectedNodeId={setSelectedNodeId}
+          searchInput = {searchInput}
+        />
+      ))}
+      
     </div>
   );
 }

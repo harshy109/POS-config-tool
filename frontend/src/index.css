@@ -1,3 +1,4 @@
+@import "tailwindcss";
 * {
   margin: 0;
   padding: 0;
@@ -7,4 +8,12 @@
 body {
   background: #f5f5f5;
   font-family: sans-serif;
+}
+
+.card{
+  margin: 0.5rem;
+}
+
+.loading-spin{
+  margin-top: 5rem;
 }
