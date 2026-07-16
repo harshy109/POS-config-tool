@@ -1,5 +1,9 @@
-import { Card, Empty, Form } from "antd";
-import storeConfigurations from "../../mocks/storeConfigurations";
+import { Card, Empty, Form, Spin } from "antd";
+// import storeConfigurations from "../../mocks/storeConfigurations";
+import {
+  fetchConfiguration,
+  updateConfiguration,
+} from "../../services/configurationService";
 import ConfigurationHeader from "./ConfigurationHeader";
 import ConfigurationTab from "./ConfigurationTab";
 import ConfigurationSection from "./ConfigurationSection";
@@ -9,12 +13,37 @@ import { useState, useEffect } from "react";
 function ConfigurationPanel({ selectedNodeId }) {
   const [isEditing, setIsEditing] = useState(false);
   const [configuration, setConfiguration] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   if (selectedNodeId) {
+  //     setConfiguration(structuredClone(fetchConfiguration));
+  //   }
+  // }, [selectedNodeId]);
 
   useEffect(() => {
-    if (selectedNodeId) {
-      // console.log("Selected Node Id:", selectedNodeId);
-      setConfiguration(structuredClone(storeConfigurations[selectedNodeId]));
+    async function loadConfiguration() {
+      if (!selectedNodeId) {
+        setConfiguration(null);
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const data = await fetchConfiguration(selectedNodeId);
+        // console.log(data);
+        setConfiguration(data);
+      } catch (error) {
+        console.error(error);
+
+        setConfiguration(null);
+      } finally {
+        setLoading(false);
+      }
     }
+
+    loadConfiguration();
   }, [selectedNodeId]);
 
   const [form] = Form.useForm();
@@ -32,35 +61,68 @@ function ConfigurationPanel({ selectedNodeId }) {
     form.setFieldsValue(initialValues);
   }, [configuration, form]);
 
+  if (loading) {
+    return (
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Spin/>
+          </div>
+      </Card>
+    );
+  }
+
   if (!selectedNodeId) {
     return (
-      <Card className="card">
-        <Empty description="Select a store to view configuration" />
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Empty description="Select a store to view configuration" />
+          </div>
       </Card>
     );
   }
 
   if (!configuration) {
     return (
-      <Card className="card">
-        <Empty description="Configuration not available" />
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Empty description="Configuration not available" />
+          </div>
       </Card>
     );
   }
 
-  function handleSave() {
-    const values = form.getFieldsValue();
-    console.log(values);
-    setConfiguration((prev) => ({
-      ...prev,
+  async function handleSave() {
+    try {
+      const values = form.getFieldsValue();
 
-      generalSettings: prev.generalSettings.map((setting) => ({
-        ...setting,
+      const generalSettings =
+        configuration.generalSettings.map(setting => ({
+          ...setting,
+          value: values[setting.key],
+        }));
 
-        value: values[setting.key],
-      })),
-    }));
-    setIsEditing(false);
+      const updatedConfiguration =
+        await updateConfiguration(
+          selectedNodeId,
+          generalSettings
+        );
+
+      setConfiguration(updatedConfiguration);
+
+      form.setFieldsValue(
+        Object.fromEntries(
+          updatedConfiguration.generalSettings.map(setting => [
+            setting.key,
+            setting.value,
+          ])
+        )
+      );
+
+      setIsEditing(false);
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleEdit() {
@@ -71,6 +133,7 @@ function ConfigurationPanel({ selectedNodeId }) {
     setIsEditing(false);
   }
 
+  console.log(configuration);
   return (
     <Card style={{ height: "100%" }} className="card">
       <ConfigurationHeader configuration={configuration} />
