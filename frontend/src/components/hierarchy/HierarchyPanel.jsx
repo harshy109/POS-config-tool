@@ -29,7 +29,7 @@ function HierarchyPanel({selectedNodeId, setSelectedNodeId}) {
 }, []);
 
 if (loading) {
-  return <Spin size="large" />;
+  return <Spin size="large" className="loading-spin"/>;
 }
 
   return (

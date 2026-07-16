@@ -1,3 +1,4 @@
+const pool = require("../config/db");
 const configurationService = require("../services/configurationService");
 
 async function getHierarchyPath(req,res){
@@ -34,9 +35,32 @@ async function getEffectiveConfiguration(req, res) {
 
 }
 
+async function updateConfiguration(req, res) {
+  try {
+    const { nodeId } = req.params;
+
+    const { generalSettings } = req.body;
+
+    const updatedConfiguration =
+      await configurationService.updateConfiguration(
+        nodeId,
+        generalSettings
+      );
+
+    res.status(200).json(updatedConfiguration);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to update configuration",
+    });
+  }
+}
+
 module.exports = {
 
     getHierarchyPath,
-    getEffectiveConfiguration
+    getEffectiveConfiguration,
+    updateConfiguration
 
 };

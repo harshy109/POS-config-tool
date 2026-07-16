@@ -13,3 +13,7 @@ body {
 .card{
   margin: 0.5rem;
 }
+
+.loading-spin{
+  margin-top: 5rem;
+}
