@@ -1,4 +1,4 @@
-import { Empty, Input , Spin} from "antd";
+import { Card, Empty, Input , Spin} from "antd";
 // import fetchHierarchy from "../../mocks/fetchHierarchy";
 import { fetchHierarchy } from "../../services/hierarchyService";
 import HierarchySearch from "./HierarchySearch.jsx";
@@ -29,7 +29,11 @@ function HierarchyPanel({selectedNodeId, setSelectedNodeId}) {
 }, []);
 
 if (loading) {
-  return <Spin size="large" className="loading-spin"/>;
+  return <Card>
+    <div className="empty-container">
+      <Spin size="large" className="loading-spin"/>
+    </div>
+  </Card>;
 }
 
   return (
@@ -42,7 +46,11 @@ if (loading) {
       </div>
       <div className="hierarchy-tree">
         {treeToRender.length === 0 ? 
-        <Empty description="No matching results found."/>
+        <Card className="hierarchy-panel">
+          <div className="empty-container">
+              <Empty description="No matching results found!" />
+          </div>
+      </Card>
       :
       treeToRender.map((node) => (
         <TreeNode
