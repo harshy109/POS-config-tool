@@ -62,7 +62,7 @@ async function getNodeConfigurations(nodeIds) {
   return rows;
 }
 
-async function findNodeConfiguration(nodeId, keyName) {
+async function findNodeConfiguration(client, nodeId, keyName) {
 
   const query = `
     SELECT
@@ -76,12 +76,12 @@ async function findNodeConfiguration(nodeId, keyName) {
       AND ck.key_name = $2;
   `;
 
-  const { rows } = await pool.query(query, [nodeId, keyName]);
+  const { rows } = await client.query(query, [nodeId, keyName]);
 
   return rows[0];
 }
 
-async function updateNodeConfiguration(configurationId, value) {
+async function updateNodeConfiguration(client, configurationId, value) {
 
   const query = `
     UPDATE node_configurations
@@ -91,11 +91,11 @@ async function updateNodeConfiguration(configurationId, value) {
     WHERE id = $2;
   `;
 
-  await pool.query(query, [value, configurationId]);
+  await client.query(query, [value, configurationId]);
 
 }
 
-async function createNodeConfiguration(nodeId, keyName, value) {
+async function createNodeConfiguration(client, nodeId, keyName, value) {
 
   const query = `
     INSERT INTO node_configurations
@@ -113,7 +113,7 @@ async function createNodeConfiguration(nodeId, keyName, value) {
     RETURNING id;
   `;
 
-  const { rows } = await pool.query(query, [
+  const { rows } = await client.query(query, [
     nodeId,
     keyName,
     value,
@@ -122,7 +122,7 @@ async function createNodeConfiguration(nodeId, keyName, value) {
   return rows[0];
 }
 
-async function createAuditLog(
+async function createAuditLog(client,
   configurationId,
   oldValue,
   newValue,
@@ -140,7 +140,7 @@ async function createAuditLog(
     VALUES ($1, $2, $3, $4);
   `;
 
-  await pool.query(query, [
+  await client.query(query, [
     configurationId,
     oldValue,
     newValue,

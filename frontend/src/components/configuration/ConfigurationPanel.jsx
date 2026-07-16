@@ -62,21 +62,31 @@ function ConfigurationPanel({ selectedNodeId }) {
   }, [configuration, form]);
 
   if (loading) {
-    return <Spin className="loading-spin"/>;
+    return (
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Spin/>
+          </div>
+      </Card>
+    );
   }
 
   if (!selectedNodeId) {
     return (
-      <Card className="card loading-spin">
-        <Empty description="Select a store to view configuration" />
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Empty description="Select a store to view configuration" />
+          </div>
       </Card>
     );
   }
 
   if (!configuration) {
     return (
-      <Card className="card">
-        <Empty description="Configuration not available" />
+      <Card className="configuration-panel">
+          <div className="empty-container">
+              <Empty description="Configuration not available" />
+          </div>
       </Card>
     );
   }
