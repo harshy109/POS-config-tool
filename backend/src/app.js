@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const hierarchyRoutes = require("./routes/hierarchyRoutes");
 const configurationRoutes = require("./routes/configurationRoutes");
+const storeRoutes = require("./routes/storeRoutes");
 const app = express();
 
 app.use(cors());
@@ -28,5 +29,7 @@ app.get("/", (req, res) => {
 app.use("/api/hierarchy", hierarchyRoutes);
 
 app.use("/api/configuration", configurationRoutes);
+
+app.use("/api/stores", storeRoutes);
 
 module.exports = app;

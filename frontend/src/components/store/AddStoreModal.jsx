@@ -64,18 +64,27 @@ const hierarchyData = [
   },
 ];
 
-function AddStoreModal({ open, onCancel }) {
+function AddStoreModal({
+    open,
+    onCancel,
+    onCreate,
+    loading
+}){
   const [form] = Form.useForm();
 
-  function handleCreate() {
-    form.validateFields().then(values => {
-      console.log(values);
+  async function handleCreate() {
 
-      form.resetFields();
+    const values = await form.validateFields();
 
-      onCancel();
-    });
-  }
+    const success = await onCreate(values);
+
+    if(success){
+
+        form.resetFields();
+
+    }
+
+}
 
   return (
     <Modal
@@ -87,12 +96,13 @@ function AddStoreModal({ open, onCancel }) {
           Cancel
         </Button>,
         <Button
-          key="create"
-          type="primary"
-          onClick={handleCreate}
-        >
-          Create Store
-        </Button>,
+    key="create"
+    type="primary"
+    loading={loading}
+    onClick={handleCreate}
+>
+    Create Store
+</Button>,
       ]}
     >
       <Form
