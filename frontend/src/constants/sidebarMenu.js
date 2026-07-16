@@ -23,6 +23,11 @@ export const SIDEBAR_ITEMS = [
     icon: createElement(ShopOutlined),
   },
   {
+    key: '/store',
+    label: 'Store Management',
+    icon: createElement(ShopOutlined ),
+  },
+  {
     key: '/configurations',
     label: 'Configurations',
     icon: createElement(SettingOutlined),

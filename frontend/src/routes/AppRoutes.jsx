@@ -4,6 +4,7 @@ import Configurations from '../pages/Configuration'
 import Dashboard from '../pages/Dashboard'
 import Settings from '../pages/Settings'
 import StoreHierarchy from '../pages/StoreHierarchy'
+import StoreManagement from '../pages/StoreManagement'
 
 const PlaceholderPage = ({ title }) => {
   return <h1>{title}</h1>
@@ -17,6 +18,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/hierarchy" element={<StoreHierarchy />} />
           <Route path="/configurations" element={<Configurations />} />
+          <Route path="/store" element={<StoreManagement />} />
           <Route path="/overrides" element={<PlaceholderPage title="Overrides" />} />
           <Route path="/templates" element={<PlaceholderPage title="Templates" />} />
           <Route path="/deployment" element={<PlaceholderPage title="Deployment" />} />
