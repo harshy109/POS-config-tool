@@ -1,6 +1,28 @@
 .hierarchy-panel{
-    background-color: #e5eff8;
+    background-color: #e0f1ff;
     padding: 1rem;
     border-radius: 0.5rem;
-    min-height:inherit;
+    /* min-height:inherit; */
+
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    overflow: hidden;
+}
+
+.hierarchy-tree{
+    flex:1;
+    overflow-y:auto;
+    padding-right:10px;
+    padding-top: 5px;
+}
+
+.hierarchy-tree::-webkit-scrollbar{
+    width:8px;
+    padding-top: 5px;
+}
+
+.hierarchy-tree::-webkit-scrollbar-thumb{
+    background:#d9d9d9;
+    border-radius:8px;
 }

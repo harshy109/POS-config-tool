@@ -12,6 +12,7 @@ function ConfigurationPanel({ selectedNodeId }) {
 
   useEffect(() => {
     if (selectedNodeId) {
+      // console.log("Selected Node Id:", selectedNodeId);
       setConfiguration(structuredClone(storeConfigurations[selectedNodeId]));
     }
   }, [selectedNodeId]);

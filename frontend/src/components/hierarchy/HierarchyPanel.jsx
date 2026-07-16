@@ -34,11 +34,14 @@ if (loading) {
 
   return (
     <div className="hierarchy-panel bg-green-100">
-      <HierarchySearch
+      <div>
+        <HierarchySearch
         searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
-      {treeToRender.length === 0 ? 
+      </div>
+      <div className="hierarchy-tree">
+        {treeToRender.length === 0 ? 
         <Empty description="No matching results found."/>
       :
       treeToRender.map((node) => (
@@ -50,6 +53,7 @@ if (loading) {
           searchInput = {searchInput}
         />
       ))}
+      </div>
       
     </div>
   );

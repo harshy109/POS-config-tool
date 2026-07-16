@@ -1,5 +1,13 @@
-.store-page{
+/* .store-page{
     height: 100%;
     display: grid;
-    grid-template-columns: 300px auto;
+    grid-template-columns: 340px auto;
+  
+} */
+
+.store-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: calc(100vh - 64px);   /* subtract your navbar height */
+    gap: 0.1rem;
 }

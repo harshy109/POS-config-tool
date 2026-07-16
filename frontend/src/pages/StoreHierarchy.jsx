@@ -7,7 +7,6 @@ function StoreHierarchy() {
   const [selectedNodeId, setSelectedNodeId] = useState("");
 
   return (
-    <>
       <div className="store-page">
         <HierarchyPanel
           selectedNodeId={selectedNodeId}
@@ -15,7 +14,6 @@ function StoreHierarchy() {
         />
         <ConfigurationPanel selectedNodeId={selectedNodeId} />
       </div>
-    </>
   );
 }
 

@@ -24,7 +24,6 @@ function TreeNode({ node, selectedNodeId, setSelectedNodeId, searchInput }) {
   }
 
   function handleSelect() {
-    // console.time("select");
     setSelectedNodeId(node.id);
   }
 
